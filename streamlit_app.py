@@ -43,14 +43,14 @@ def resize_image_to_target(image, target_width, target_height):
 
 def download_model():
     model_path = hf_hub_download(repo_id="moersxm12138/MySAM", filename="sam_vit_h_4b8939.pth")
+    return model_path
 
 # 加载SAM模型
 @st.cache_resource
 def load_sam_model():
     model_type = "vit_h"
     
-    download_model()
-    sam_checkpoint = "sam_vit_h_4b8939.pth"
+    sam_checkpoint = download_model()
     
     device = "cuda" if torch.cuda.is_available() else "cpu"
     sam = sam_model_registry[model_type](checkpoint=sam_checkpoint)
